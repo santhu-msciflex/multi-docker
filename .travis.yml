@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t santhosh/react-test:1.0 -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true santhosh/react-test:1.0 npm run test -- --coverage
+
+after_success:
+  - docker build -t santhosh/multi-client ./client
+  - docker build -t santhosh/multi-nginx ./nginx
+  - docker build -t santhosh/multi-server ./server
+  - docker build -t santhosh/multi-worker ./worker
