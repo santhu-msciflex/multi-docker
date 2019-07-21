@@ -20,3 +20,17 @@ after_success:
   - docker push santhumsciflex/multi-server
   - docker push santhumsciflex/multi-worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-2-912822331163
+  bucket_path: docket-multi
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+  
